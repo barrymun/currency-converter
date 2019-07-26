@@ -7,13 +7,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const styles = theme => ({});
 
 class Root extends React.Component {
-    state = {
-        isPlaying: false,
-        mp3PlayerInitialized: false,
-        audio: null,
-        src: '',
-        srcInput: '',
-    };
+    state = {};
 
     render() {
         return (
