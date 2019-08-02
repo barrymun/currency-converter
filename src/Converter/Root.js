@@ -2,11 +2,12 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import AsyncSelect from 'react-select/async';
-import axios from "axios";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
+
+import {ConverterAPI} from "../api/ConverterAPI";
 
 const styles = theme => ({
     container: {
@@ -29,6 +30,7 @@ const styles = theme => ({
         width: 200,
     },
 });
+let api = new ConverterAPI();
 
 class Root extends React.Component {
     state = {
@@ -36,13 +38,16 @@ class Root extends React.Component {
         toInputValue: '',
         fromCurrency: 'GBP',
         toCurrency: 'USD',
-        fromAmount: 0,
-        toAmount: 0,
+        fromAmount: 1,
+        toAmount: 1,
+        exchangeRate: null,
     };
 
     async componentDidMount() {
-        let r = await axios.get('https://api.exchangeratesapi.io/latest?base=GBP&symbols=USD');
-        console.log(r.data)
+        let r = await api.convert();
+        let exchangeRate = r.data.rates[this.state.toCurrency];
+        let toAmount = ConverterAPI.getAmount(exchangeRate, this.state.toAmount);
+        this.setState({exchangeRate, toAmount});
     }
 
     render() {
@@ -50,7 +55,10 @@ class Root extends React.Component {
         const {
             fromAmount,
             toAmount,
+            exchangeRate,
         } = this.state;
+
+        if (exchangeRate == null) return null;
 
         return (
             <div className={classes.container}>
