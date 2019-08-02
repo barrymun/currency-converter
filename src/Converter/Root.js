@@ -38,15 +38,15 @@ class Root extends React.Component {
         toInputValue: '',
         fromCurrency: 'GBP',
         toCurrency: 'USD',
-        fromAmount: 1,
-        toAmount: 1,
+        fromAmount: 1.0,
+        toAmount: 1.0,
         exchangeRate: null,
     };
 
     async componentDidMount() {
         let r = await api.convert();
         let exchangeRate = r.data.rates[this.state.toCurrency];
-        let toAmount = ConverterAPI.getAmount(exchangeRate, this.state.toAmount);
+        let toAmount = ConverterAPI.getGoingToAmount(exchangeRate, this.state.toAmount);
         this.setState({exchangeRate, toAmount});
     }
 
@@ -111,8 +111,21 @@ class Root extends React.Component {
 
 
     handleChange = name => event => {
-        if (isNaN(event.target.value)) return;
-        this.setState({[name]: event.target.value});
+        const value = event.target.value;
+        const {exchangeRate} = this.state;
+
+        if (isNaN(value)) return;
+
+        let key, amount;
+        if (name === 'fromAmount') {
+            key = 'toAmount';
+            amount = ConverterAPI.getGoingToAmount(exchangeRate, value);
+        } else {
+            key = 'fromAmount';
+            amount = ConverterAPI.getComingFromAmount(exchangeRate, value);
+        }
+        return new Promise(resolve =>
+            this.setState({[name]: value, [key]: amount}, () => resolve()));
     };
 
 

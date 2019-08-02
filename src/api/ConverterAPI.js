@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export class ConverterAPI {
-    fromAmount = 1.0;
-    toAmount = 1.0;
     fromCurrency = `GBP`;
     toCurrency = `USD`;
     fromRef = `:from`;
@@ -21,7 +19,11 @@ export class ConverterAPI {
         return await axios.get(url);
     }
 
-    static getAmount(exchangeRate, amount) {
+    static getGoingToAmount(exchangeRate, amount) {
         return exchangeRate * amount;
+    }
+
+    static getComingFromAmount(exchangeRate, amount) {
+        return amount / exchangeRate;
     }
 }
