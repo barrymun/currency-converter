@@ -165,8 +165,7 @@ class Root extends React.Component {
             key = 'fromAmount';
             amount = ConverterAPI.getComingFromAmount(exchangeRate, value);
         }
-        return new Promise(resolve =>
-            this.setState({[name]: value, [key]: amount}, resolve));
+        return this.setStateAsync({[name]: value, [key]: amount});
     };
 
 
@@ -178,6 +177,9 @@ class Root extends React.Component {
         let r = await api.convert();
         let exchangeRate = r.data.rates[this.state.selectedToCurrency.value];
         await this.setStateAsync({exchangeRate});
+
+        let toAmount = this.state.fromAmount * this.state.exchangeRate;
+        return this.setStateAsync({toAmount});
     };
 }
 
