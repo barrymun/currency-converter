@@ -72,8 +72,6 @@ class Root extends React.Component {
         const {selectedToCurrency} = this.state;
         let api = new ConverterAPI();
         let r = await api.convert();
-        let x = await api.convert2();
-        console.log({x})
         let exchangeRate = r.data.rates[selectedToCurrency.value];
         let toAmount = ConverterAPI.getGoingToAmount(exchangeRate, this.state.toAmount);
         this.setState({exchangeRate, toAmount});
@@ -168,35 +166,18 @@ class Root extends React.Component {
             amount = ConverterAPI.getComingFromAmount(exchangeRate, value);
         }
         return new Promise(resolve =>
-            this.setState({[name]: value, [key]: amount}, () => resolve()));
+            this.setState({[name]: value, [key]: amount}, resolve));
     };
 
 
     handleSelectChange = async (value, data) => {
-        // console.log({value})
-        // console.log({data})
         await this.setStateAsync({[data.name]: value});
         const {selectedFromCurrency, selectedToCurrency} = this.state;
-        let r, from, to, key, amount, currencyKey;
-        if (data.name === 'selectedFromCurrency') {
-            key = 'toAmount';
-            amount = ConverterAPI.getGoingToAmount(this.state.exchangeRate, this.state.toAmount)
-            currencyKey = 'selectedToCurrency';
-            from = selectedFromCurrency.value;
-            to = selectedToCurrency.value;
-        } else {
-            key = 'fromAmount';
-            amount = ConverterAPI.getComingFromAmount(this.state.exchangeRate, this.state.toAmount)
-            currencyKey = 'selectedFromCurrency';
-            from = selectedToCurrency.value;
-            to = selectedFromCurrency.value;
-        }
-        let api = new ConverterAPI(from, to);
-        r = await api.convert();
-        console.log(r)
-        let exchangeRate = r.data.rates[this.state[currencyKey].value];
-        console.log({exchangeRate})
-        this.setState({exchangeRate, [key]: amount});
+
+        let api = new ConverterAPI(selectedFromCurrency.value, selectedToCurrency.value);
+        let r = await api.convert();
+        let exchangeRate = r.data.rates[this.state.selectedToCurrency.value];
+        await this.setStateAsync({exchangeRate});
     };
 }
 
