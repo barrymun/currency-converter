@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
@@ -21,27 +21,45 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        overflow: 'visible',
     },
     select: {
-        width: 100,
+        width: 160,
     },
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
         width: 200,
     },
+    divider: {
+        width: 10,
+    },
 });
 let api = new ConverterAPI();
+let options = Object.keys(currencyJSON).map((key, index) => {
+    return {label: currencyJSON[key].name, value: key};
+});
 
 class Root extends React.Component {
+    initialFromCurrency = 'GBP';
+    initialToCurrency = 'USD';
+
     state = {
         fromInputValue: '',
         toInputValue: '',
-        fromCurrency: 'GBP',
-        toCurrency: 'USD',
+        fromCurrency: this.initialFromCurrency,
+        toCurrency: this.initialToCurrency,
         fromAmount: 1.0,
         toAmount: 1.0,
         exchangeRate: null,
+        selectedFromCurrency: {
+            label: currencyJSON[this.initialFromCurrency].name,
+            value: currencyJSON[this.initialFromCurrency].code,
+        },
+        selectedToCurrency: {
+            label: currencyJSON[this.initialToCurrency].name,
+            value: currencyJSON[this.initialToCurrency].code,
+        }
     };
 
     async componentDidMount() {
@@ -55,8 +73,8 @@ class Root extends React.Component {
     render() {
         const {classes} = this.props;
         const {
-            fromCurrency,
-            toCurrency,
+            selectedFromCurrency,
+            selectedToCurrency,
             fromAmount,
             toAmount,
             exchangeRate,
@@ -67,6 +85,16 @@ class Root extends React.Component {
         return (
             <div className={classes.container}>
                 <Card className={classes.card}>
+                    <div className={classes.select}>
+                        <Select
+                            className="currency"
+                            classNamePrefix="select"
+                            name="selectedFromCurrency"
+                            defaultValue={selectedFromCurrency}
+                            options={options}
+                            onChange={this.handleSelectChange}
+                        />
+                    </div>
                     <TextField
                         label=""
                         value={fromAmount}
@@ -78,17 +106,23 @@ class Root extends React.Component {
                         }}
                         margin="normal"
                     />
-                    <div className={classes.select}>
-                        <AsyncSelect
-                            cacheOptions
-                            defaultOptions
-                            loadOptions={this.loadOptions}
-                            placeholder=""
-                        />
-                    </div>
                 </Card>
 
+                <div className={classes.divider}/>
+
                 <Card className={classes.card}>
+                    <div className={classes.select}>
+                        <div className={classes.select}>
+                            <Select
+                                className="currency"
+                                classNamePrefix="select"
+                                name="selectedToCurrency"
+                                defaultValue={selectedToCurrency}
+                                options={options}
+                                onChange={this.handleSelectChange}
+                            />
+                        </div>
+                    </div>
                     <TextField
                         label=""
                         value={toAmount}
@@ -100,14 +134,6 @@ class Root extends React.Component {
                         }}
                         margin="normal"
                     />
-                    <div className={classes.select}>
-                        <AsyncSelect
-                            cacheOptions
-                            defaultOptions
-                            loadOptions={this.loadOptions}
-                            placeholder=""
-                        />
-                    </div>
                 </Card>
             </div>
         );
@@ -133,19 +159,15 @@ class Root extends React.Component {
     };
 
 
-    handleSelectChange = newValue => {
-        const fromInputValue = newValue.replace(/\W/g, '');
-        this.setState({fromInputValue});
-        return fromInputValue;
+    handleSelectChange = (value, data) => {
+        console.log({value})
+        console.log({data})
+        this.setState({[data.name]: value});
     };
 
 
-    loadOptions = fromInputValue =>
-        new Promise(resolve => {
-            setTimeout(() => {
-                resolve(fromInputValue);
-            }, 1000);
-        });
+    loadOptions = fromInputValue => {
+    };
 }
 
 Root.propTypes = {
