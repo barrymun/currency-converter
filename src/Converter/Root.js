@@ -8,6 +8,7 @@ import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 
 import {ConverterAPI} from "../api/ConverterAPI";
+import currencyJSON from '../currency';
 
 const styles = theme => ({
     container: {
@@ -44,8 +45,9 @@ class Root extends React.Component {
     };
 
     async componentDidMount() {
-        let r = await api.convert();
-        let exchangeRate = r.data.rates[this.state.toCurrency];
+        const {fromCurrency, toCurrency} = this.state;
+        let r = await api.convert(fromCurrency, toCurrency);
+        let exchangeRate = r.data.rates[toCurrency];
         let toAmount = ConverterAPI.getGoingToAmount(exchangeRate, this.state.toAmount);
         this.setState({exchangeRate, toAmount});
     }
@@ -53,6 +55,8 @@ class Root extends React.Component {
     render() {
         const {classes} = this.props;
         const {
+            fromCurrency,
+            toCurrency,
             fromAmount,
             toAmount,
             exchangeRate,
