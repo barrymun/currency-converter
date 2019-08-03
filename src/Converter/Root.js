@@ -6,6 +6,7 @@ import Select from 'react-select';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import {ConverterAPI} from "../api/ConverterAPI";
 import currencyJSON from '../currency';
@@ -112,6 +113,13 @@ class Root extends React.Component {
                             shrink: true,
                         }}
                         margin="normal"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    {currencyJSON[selectedFromCurrency.value].symbol}
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <div>
                         {selectedFromCurrency.value}
@@ -141,6 +149,13 @@ class Root extends React.Component {
                             shrink: true,
                         }}
                         margin="normal"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    {currencyJSON[selectedToCurrency.value].symbol}
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <div>
                         {selectedToCurrency.value}
