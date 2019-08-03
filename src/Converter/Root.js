@@ -35,7 +35,6 @@ const styles = theme => ({
         width: 10,
     },
 });
-let api = new ConverterAPI();
 let options = Object.keys(currencyJSON).map((key, index) => {
     return {label: currencyJSON[key].name, value: key};
 });
@@ -47,8 +46,6 @@ class Root extends React.Component {
     state = {
         fromInputValue: '',
         toInputValue: '',
-        fromCurrency: this.initialFromCurrency,
-        toCurrency: this.initialToCurrency,
         fromAmount: 1.0,
         toAmount: 1.0,
         exchangeRate: null,
@@ -62,10 +59,22 @@ class Root extends React.Component {
         }
     };
 
+    constructor(props) {
+        super(props);
+        this.setStateAsync = this.setStateAsync.bind(this);
+    }
+
+    setStateAsync(state) {
+        return new Promise(resolve => this.setState(state, resolve));
+    };
+
     async componentDidMount() {
-        const {fromCurrency, toCurrency} = this.state;
-        let r = await api.convert(fromCurrency, toCurrency);
-        let exchangeRate = r.data.rates[toCurrency];
+        const {selectedToCurrency} = this.state;
+        let api = new ConverterAPI();
+        let r = await api.convert();
+        let x = await api.convert2();
+        console.log({x})
+        let exchangeRate = r.data.rates[selectedToCurrency.value];
         let toAmount = ConverterAPI.getGoingToAmount(exchangeRate, this.state.toAmount);
         this.setState({exchangeRate, toAmount});
     }
@@ -106,22 +115,23 @@ class Root extends React.Component {
                         }}
                         margin="normal"
                     />
+                    <div>
+                        {selectedFromCurrency.value}
+                    </div>
                 </Card>
 
                 <div className={classes.divider}/>
 
                 <Card className={classes.card}>
                     <div className={classes.select}>
-                        <div className={classes.select}>
-                            <Select
-                                className="currency"
-                                classNamePrefix="select"
-                                name="selectedToCurrency"
-                                defaultValue={selectedToCurrency}
-                                options={options}
-                                onChange={this.handleSelectChange}
-                            />
-                        </div>
+                        <Select
+                            className="currency"
+                            classNamePrefix="select"
+                            name="selectedToCurrency"
+                            defaultValue={selectedToCurrency}
+                            options={options}
+                            onChange={this.handleSelectChange}
+                        />
                     </div>
                     <TextField
                         label=""
@@ -134,6 +144,9 @@ class Root extends React.Component {
                         }}
                         margin="normal"
                     />
+                    <div>
+                        {selectedToCurrency.value}
+                    </div>
                 </Card>
             </div>
         );
@@ -159,14 +172,31 @@ class Root extends React.Component {
     };
 
 
-    handleSelectChange = (value, data) => {
-        console.log({value})
-        console.log({data})
-        this.setState({[data.name]: value});
-    };
-
-
-    loadOptions = fromInputValue => {
+    handleSelectChange = async (value, data) => {
+        // console.log({value})
+        // console.log({data})
+        await this.setStateAsync({[data.name]: value});
+        const {selectedFromCurrency, selectedToCurrency} = this.state;
+        let r, from, to, key, amount, currencyKey;
+        if (data.name === 'selectedFromCurrency') {
+            key = 'toAmount';
+            amount = ConverterAPI.getGoingToAmount(this.state.exchangeRate, this.state.toAmount)
+            currencyKey = 'selectedToCurrency';
+            from = selectedFromCurrency.value;
+            to = selectedToCurrency.value;
+        } else {
+            key = 'fromAmount';
+            amount = ConverterAPI.getComingFromAmount(this.state.exchangeRate, this.state.toAmount)
+            currencyKey = 'selectedFromCurrency';
+            from = selectedToCurrency.value;
+            to = selectedFromCurrency.value;
+        }
+        let api = new ConverterAPI(from, to);
+        r = await api.convert();
+        console.log(r)
+        let exchangeRate = r.data.rates[this.state[currencyKey].value];
+        console.log({exchangeRate})
+        this.setState({exchangeRate, [key]: amount});
     };
 }
 
