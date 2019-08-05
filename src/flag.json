@@ -1,102 +1,134 @@
 {
   "AUD": {
-    "name": "Australian Dollar"
+    "name": "Australian Dollar",
+    "src": "flags/svg/au.svg"
   },
   "BGN": {
-    "name": "Bulgarian Lev"
+    "name": "Bulgarian Lev",
+    "src": "flags/svg/bg.svg"
   },
   "BRL": {
-    "name": "Brazilian Real"
+    "name": "Brazilian Real",
+    "src": "flags/svg/br.svg"
   },
   "CAD": {
-    "name": "Canadian Dollar"
+    "name": "Canadian Dollar",
+    "src": "flags/svg/ca.svg"
   },
   "CHF": {
-    "name": "Swiss Franc"
+    "name": "Swiss Franc",
+    "src": "flags/svg/ch.svg"
   },
   "CNY": {
-    "name": "Chinese Yuan"
+    "name": "Chinese Yuan",
+    "src": "flags/svg/cn.svg"
   },
   "CZK": {
-    "name": "Czech Republic Koruna"
+    "name": "Czech Republic Koruna",
+    "src": "flags/svg/cz.svg"
   },
   "DKK": {
-    "name": "Danish Krone"
+    "name": "Danish Krone",
+    "src": "flags/svg/dk.svg"
   },
   "EUR": {
-    "name": "Euro"
+    "name": "Euro",
+    "src": "flags/svg/eu.svg"
   },
   "GBP": {
-    "name": "British Pound Sterling"
+    "name": "British Pound Sterling",
+    "src": "flags/svg/gb.svg"
   },
   "HKD": {
-    "name": "Hong Kong Dollar"
+    "name": "Hong Kong Dollar",
+    "src": "flags/svg/hk.svg"
   },
   "HRK": {
-    "name": "Croatian Kuna"
+    "name": "Croatian Kuna",
+    "src": "flags/svg/hr.svg"
   },
   "HUF": {
-    "name": "Hungarian Forint"
+    "name": "Hungarian Forint",
+    "src": "flags/svg/hu.svg"
   },
   "IDR": {
-    "name": "Indonesian Rupiah"
+    "name": "Indonesian Rupiah",
+    "src": "flags/svg/id.svg"
   },
   "ILS": {
-    "name": "Israeli New Sheqel"
+    "name": "Israeli New Sheqel",
+    "src": "flags/svg/il.svg"
   },
   "INR": {
-    "name": "Indian Rupee"
+    "name": "Indian Rupee",
+    "src": "flags/svg/in.svg"
   },
   "ISK": {
-    "name": "Icelandic Króna"
+    "name": "Icelandic Króna",
+    "src": "flags/svg/is.svg"
   },
   "JPY": {
-    "name": "Japanese Yen"
+    "name": "Japanese Yen",
+    "src": "flags/svg/jp.svg"
   },
   "KRW": {
-    "name": "South Korean Won"
+    "name": "South Korean Won",
+    "src": "flags/svg/kr.svg"
   },
   "MXN": {
-    "name": "Mexican Peso"
+    "name": "Mexican Peso",
+    "src": "flags/svg/mx.svg"
   },
   "MYR": {
-    "name": "Malaysian Ringgit"
+    "name": "Malaysian Ringgit",
+    "src": "flags/svg/my.svg"
   },
   "NOK": {
-    "name": "Norwegian Krone"
+    "name": "Norwegian Krone",
+    "src": "flags/svg/no.svg"
   },
   "NZD": {
-    "name": "New Zealand Dollar"
+    "name": "New Zealand Dollar",
+    "src": "flags/svg/nz.svg"
   },
   "PHP": {
-    "name": "Philippine Peso"
+    "name": "Philippine Peso",
+    "src": "flags/svg/ph.svg"
   },
   "PLN": {
-    "name": "Polish Zloty"
+    "name": "Polish Zloty",
+    "src": "flags/svg/pl.svg"
   },
   "RON": {
-    "name": "Romanian Leu"
+    "name": "Romanian Leu",
+    "src": "flags/svg/ro.svg"
   },
   "RUB": {
-    "name": "Russian Ruble"
+    "name": "Russian Ruble",
+    "src": "flags/svg/ru.svg"
   },
   "SEK": {
-    "name": "Swedish Krona"
+    "name": "Swedish Krona",
+    "src": "flags/svg/se.svg"
   },
   "SGD": {
-    "name": "Singapore Dollar"
+    "name": "Singapore Dollar",
+    "src": "flags/svg/sg.svg"
   },
   "THB": {
-    "name": "Thai Baht"
+    "name": "Thai Baht",
+    "src": "flags/svg/th.svg"
   },
   "TRY": {
-    "name": "Turkish Lira"
+    "name": "Turkish Lira",
+    "src": "flags/svg/tr.svg"
   },
   "USD": {
     "name": "US Dollar",
     "src": "flags/svg/us.svg"
   },
   "ZAR": {
-    "name": "South African Rand"
+    "name": "South African Rand",
+    "src": "flags/svg/za.svg"
   }
 }
