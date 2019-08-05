@@ -13,8 +13,10 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
+    "react-svg": "^10.0.14",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "svg-country-flags": "^1.2.6",
     "typeface-roboto": "0.0.75"
   },
   "scripts": {

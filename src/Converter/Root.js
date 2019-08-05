@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Select from 'react-select';
+import ReactSVG from 'react-svg'
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
@@ -10,6 +11,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import {ConverterAPI} from "../api/ConverterAPI";
 import currencyJSON from '../currency';
+import flagJSON from '../flag';
 
 const styles = theme => ({
     container: {
@@ -57,6 +59,7 @@ class Root extends React.Component {
         selectedToCurrency: {
             label: currencyJSON[this.initialToCurrency].name,
             value: currencyJSON[this.initialToCurrency].code,
+            src: flagJSON[this.initialToCurrency].src,
         }
     };
 
@@ -92,6 +95,9 @@ class Root extends React.Component {
 
         return (
             <div className={classes.container}>
+                <div style={{width: 100}}>
+                    <ReactSVG src={selectedToCurrency.src}/>
+                </div>
                 <Card className={classes.card}>
                     <div className={classes.select}>
                         <Select
