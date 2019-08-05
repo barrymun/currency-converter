@@ -37,6 +37,10 @@ const styles = theme => ({
     divider: {
         width: 10,
     },
+    flagContainer: {
+        display: 'flex',
+        alignItems: 'center',
+    },
     flagSvgContainer: {
         height: 30,
     },
@@ -102,7 +106,7 @@ class Root extends React.Component {
         return (
             <div className={classes.container}>
                 <div>
-                    <div>
+                    <div className={classes.flagContainer}>
                         <div className={classes.flagSvgContainer}>
                             {selectedFromCurrency.flagSrc != null
                                 ? (
@@ -113,6 +117,9 @@ class Root extends React.Component {
                                 )
                                 : null
                             }
+                        </div>
+                        <div style={{marginLeft: 8}}>
+                            {selectedFromCurrency.label}
                         </div>
                     </div>
                     <Card className={classes.card}>
@@ -153,7 +160,7 @@ class Root extends React.Component {
                 <div className={classes.divider}/>
 
                 <div>
-                    <div>
+                    <div className={classes.flagContainer}>
                         <div className={classes.flagSvgContainer}>
                             {selectedToCurrency.flagSrc != null
                                 ? (
@@ -164,6 +171,9 @@ class Root extends React.Component {
                                 )
                                 : null
                             }
+                        </div>
+                        <div style={{marginLeft: 8}}>
+                            {selectedToCurrency.label}
                         </div>
                     </div>
                     <Card className={classes.card}>
